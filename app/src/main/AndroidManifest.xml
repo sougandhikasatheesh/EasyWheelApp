@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +16,12 @@
         android:theme="@style/Theme.EasyWheel">
         <activity android:name=".Onboarding2Activity"/>
         <activity android:name=".Onboarding3Activity"/>
+        <activity android:name=".UserSelectionActivity"/>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MobilityDashboardActivity" />
+        <activity android:name=".MapActivity" />
+
+
 
 
         <!-- Splash/Main Activity -->

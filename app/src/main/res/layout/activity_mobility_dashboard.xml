@@ -103,7 +103,7 @@
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/icon_accessible_toilet"/>
+                android:src="@drawable/icon_toilet"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hospitals"
+                android:text="Hospital"
                 android:textSize="13sp"
                 android:textColor="@color/easywheel_text"
                 android:layout_marginTop="6dp"/>
@@ -148,7 +148,7 @@
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/icon_medical"/>
+                android:src="@drawable/icon_medicals"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/icon_repair"/>
+                android:src="@drawable/icon_repairshop"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -192,7 +192,7 @@
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/icon_ngo"/>
+                android:src="@drawable/icon_ngos"/>
 
             <TextView
                 android:layout_width="wrap_content"

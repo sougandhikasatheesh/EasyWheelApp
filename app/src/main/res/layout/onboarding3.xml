@@ -63,7 +63,7 @@
 
     <!-- Button -->
     <Button
-        android:id="@+id/btnStart"
+        android:id="@+id/btnGetStarted"
         android:layout_width="170dp"
         android:layout_height="50dp"
         android:text="Get Started"
@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/btnStart"
+        app:layout_constraintTop_toBottomOf="@id/btnGetStarted"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp">
