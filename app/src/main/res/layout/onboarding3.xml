@@ -11,7 +11,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Find Nearby"
+        android:text="Get Help in"
         android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
@@ -25,8 +25,8 @@
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Accessible Places"
-        android:textSize="18sp"
+        android:text="Emergencies"
+        android:textSize="20sp"
         android:textColor="#E0E0E0"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +35,10 @@
 
     <!-- Illustration -->
     <ImageView
-        android:id="@+id/imgMap"
+        android:id="@+id/imgEmergency"
         android:layout_width="0dp"
         android:layout_height="260dp"
-        android:src="@drawable/onboarding2_image"
+        android:src="@drawable/onboarding3_image"
         android:scaleType="fitCenter"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,23 +50,23 @@
         android:id="@+id/tvDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Locate Hospitals, Shops &amp; More"
+        android:text="Quick Alerts to Your Caregivers"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
         android:gravity="center"
         android:paddingStart="32dp"
         android:paddingEnd="32dp"
-        app:layout_constraintTop_toBottomOf="@id/imgMap"
+        app:layout_constraintTop_toBottomOf="@id/imgEmergency"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"/>
 
-    <!-- Next Button -->
+    <!-- Button -->
     <Button
-        android:id="@+id/btnNext"
-        android:layout_width="150dp"
+        android:id="@+id/btnStart"
+        android:layout_width="170dp"
         android:layout_height="50dp"
-        android:text="Next"
+        android:text="Get Started"
         android:textSize="18sp"
         android:backgroundTint="#D9D9D9"
         android:textColor="#000000"
@@ -75,13 +75,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"/>
 
-    <!-- Dots Indicator -->
+    <!-- Dots -->
     <LinearLayout
-        android:id="@+id/dots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/btnNext"
+        app:layout_constraintTop_toBottomOf="@id/btnStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp">
@@ -95,13 +94,13 @@
         <View
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:background="@drawable/dot_active"
+            android:background="@drawable/dot_inactive"
             android:layout_margin="6dp"/>
 
         <View
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:background="@drawable/dot_inactive"
+            android:background="@drawable/dot_active"
             android:layout_margin="6dp"/>
 
     </LinearLayout>
