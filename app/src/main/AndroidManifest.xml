@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyWheel">
+        <activity android:name=".Onboarding2Activity"/>
+
 
         <!-- Splash/Main Activity -->
         <activity
