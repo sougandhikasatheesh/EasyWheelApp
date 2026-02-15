@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="easywheel_bg">#2F4054</color>
+    <color name="easywheel_button">#E6E6E6</color>
+    <color name="easywheel_text_dark">#222222</color>
+    <color name="white">#FFFFFF</color>
+    <color name="easywheel_primary">#3E5166</color>
+    <color name="easywheel_text">#2D3748</color>
 </resources>
