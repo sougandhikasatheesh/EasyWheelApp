@@ -14,6 +14,10 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import java.io.IOException
 import java.util.Locale
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+
 
 class MapActivity : AppCompatActivity() {
 
@@ -40,52 +44,73 @@ class MapActivity : AppCompatActivity() {
     }
 
     private fun checkLocationPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
+        // If permission is already granted, fetch location
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             getCurrentLocation()
         } else {
+            // Launch permission request dialog
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
+
 
     private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
         ) return
 
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location ->
-                if (location != null) {
+        val locationRequest = LocationRequest.create().apply {
+            interval = 1000
+            fastestInterval = 500
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            numUpdates = 3 // request multiple updates for better accuracy
+        }
+
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(result: LocationResult) {
+                val locations = result.locations
+                if (locations.isNotEmpty()) {
+                    // Take the most recent location
+                    val location = locations.last()
                     val lat = location.latitude
                     val lon = location.longitude
 
-                    val geocoder = Geocoder(this, Locale.getDefault())
+                    // Convert to address
+                    val geocoder = Geocoder(this@MapActivity, Locale.getDefault())
                     try {
                         val addresses = geocoder.getFromLocation(lat, lon, 1)
-                        if (!addresses.isNullOrEmpty()) {
-                            val address = addresses[0].getAddressLine(0)
-                            locationText.text = address
+                        val address = if (!addresses.isNullOrEmpty()) addresses[0].getAddressLine(0) else "Address not found"
 
-                            // Send address back to dashboard
-                            val resultIntent = Intent()
-                            resultIntent.putExtra("address", address)
-                            setResult(RESULT_OK, resultIntent)
-                            finish() // Only finish when we have a valid address
-                        } else {
-                            Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show()
-                        }
+                        locationText.text = address
+
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("address", address)
+                        setResult(RESULT_OK, resultIntent)
+                        finish() // close activity
+
                     } catch (e: IOException) {
                         e.printStackTrace()
-                        Toast.makeText(this, "Error fetching address: ${e.message}", Toast.LENGTH_LONG).show()
+                        locationText.text = "Error fetching address"
                     }
 
                 } else {
-                    Toast.makeText(this, "Location not ready. Try again.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MapActivity, "Unable to get location. Try again.", Toast.LENGTH_LONG).show()
                 }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to get location: ${e.message}", Toast.LENGTH_LONG).show()
-            }
+        }
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, mainLooper)
     }
+
+
 }
+
+
+
+
+
+
