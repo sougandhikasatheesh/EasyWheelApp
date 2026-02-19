@@ -1,0 +1,16 @@
+<resources>
+    <!-- GPS related -->
+    <string name="app_name">Easy wheel</string>
+    <string name="fetching_location">Fetching location...</string>
+    <string name="location_permission_denied">Location permission denied</string>
+    <string name="location_format">Latitude: %1$.6f\nLongitude: %2$.6f</string>
+    <string name="location_unavailable">Unable to fetch location. Try again.</string>
+
+    <!-- Role selection screen -->
+    <string name="easywheel_title">EASY WHEEL</string>
+    <string name="easywheel_subtitle">Navigate with Independence</string>
+    <string name="mobility_user">MOBILITY USER</string>
+    <string name="caregivers">CAREGIVERS</string>
+    <string name="admin">ADMIN</string>
+
+</resources>
