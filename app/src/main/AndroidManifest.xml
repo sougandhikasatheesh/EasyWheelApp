@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyWheel">
+
+        <!-- ✅ ADD THIS — Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB6VkogZkNOdwJ0K8QcLJYfbjCrvg9fBwA"/>
+
         <activity android:name=".Onboarding2Activity"/>
         <activity android:name=".Onboarding3Activity"/>
         <activity android:name=".UserSelectionActivity"/>
@@ -21,10 +29,7 @@
         <activity android:name=".MobilityDashboardActivity" />
         <activity android:name=".MapActivity" />
 
-
-
-
-        <!-- Splash/Main Activity -->
+        <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -36,7 +41,6 @@
 
         </activity>
 
-        <!-- Onboarding Screen -->
         <activity android:name=".Onboarding1Activity"/>
 
     </application>
