@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -20,7 +19,7 @@
         <!-- ✅ ADD THIS — Google Maps API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB6VkogZkNOdwJ0K8QcLJYfbjCrvg9fBwA"/>
+            android:value="@string/google_maps_key"/>
 
         <activity android:name=".Onboarding2Activity"/>
         <activity android:name=".Onboarding3Activity"/>

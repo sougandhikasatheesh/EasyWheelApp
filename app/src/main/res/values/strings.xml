@@ -5,6 +5,7 @@
     <string name="location_permission_denied">Location permission denied</string>
     <string name="location_format">Latitude: %1$.6f\nLongitude: %2$.6f</string>
     <string name="location_unavailable">Unable to fetch location. Try again.</string>
+    <string name="google_maps_key">AIzaSyB6VkogZkNOdwJ0K8QcLJYfbjCrvg9fBwA</string>
 
     <!-- Role selection screen -->
     <string name="easywheel_title">EASY WHEEL</string>
@@ -12,5 +13,20 @@
     <string name="mobility_user">MOBILITY USER</string>
     <string name="caregivers">CAREGIVERS</string>
     <string name="admin">ADMIN</string>
+
+    <!-- mobility dashboard -->
+    <string name="menu">menu</string>
+    <string name="refresh">refresh</string>
+    <string name="app_title">EASY WHEEL</string>
+    <string name="hello_user">Hello, User</string>
+    <string name="choose_location">Choose your Current Location</string>
+    <string name="search_hint">Search hospitals, medical shops, repair shops...</string>
+
+    <string name="accessible_toilets">Accessible Toilets</string>
+    <string name="hospital">Hospital</string>
+    <string name="medicals">Medicals</string>
+    <string name="repair_shops">Repair Shops</string>
+    <string name="ngos">NGOs</string>
+    <string name="police_stations">Police Stations</string>
 
 </resources>
