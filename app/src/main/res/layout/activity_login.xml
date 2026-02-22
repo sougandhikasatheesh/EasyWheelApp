@@ -74,4 +74,16 @@
         android:textColor="#333333"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tvCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_account_underlined"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginTop="18dp"
+        android:clickable="true"
+        android:focusable="true"/>
+
 </LinearLayout>

@@ -33,4 +33,6 @@
     <string name="ngos">NGOs</string>
     <string name="police_stations">Police Stations</string>
 
+    <!-- login screen -->
+    <string name="create_account_underlined"><u>Create Account</u></string>
 </resources>
