@@ -1,18 +1,19 @@
 package com.example.easywheel
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import org.json.JSONObject
 import java.net.URL
 import kotlin.concurrent.thread
@@ -22,8 +23,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var locationText: TextView
 
-    // ✅ NEW — receive category
+    private lateinit var fusedClient: FusedLocationProviderClient
+    private lateinit var locationRequest: LocationRequest
+
     private var placeType: String? = null
+    private var userLatLng: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +35,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationText = findViewById(R.id.locationText)
 
-        // ✅ NEW
+        // If null → opened from bottom nav (normal map)
         placeType = intent.getStringExtra("PLACE_TYPE")
 
         val mapFragment = supportFragmentManager
@@ -43,89 +47,150 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        val fused = LocationServices.getFusedLocationProviderClient(this)
+        fusedClient = LocationServices.getFusedLocationProviderClient(this)
+
+        locationRequest = LocationRequest.Builder(
+            Priority.PRIORITY_HIGH_ACCURACY, 2000
+        ).build()
 
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            locationText.text = "Location permission not granted"
+            locationText.text = getString(R.string.location_permission_denied)
             return
         }
 
         mMap.isMyLocationEnabled = true
 
-        fused.lastLocation.addOnSuccessListener { loc ->
+        fusedClient.lastLocation.addOnSuccessListener { loc ->
             if (loc != null) {
-                val userLatLng = LatLng(loc.latitude, loc.longitude)
-
-                // ✅ YOUR EXISTING CODE — unchanged
-                mMap.addMarker(
-                    MarkerOptions()
-                        .position(userLatLng)
-                        .title("You are here")
-                )
-
-                mMap.moveCamera(
-                    CameraUpdateFactory.newLatLngZoom(userLatLng, 16f)
-                )
-
-                locationText.text = "Location loaded on map"
-
-                // ✅ NEW — search nearby after location ready
-                placeType?.let {
-                    searchNearby(getKeyword(it), loc.latitude, loc.longitude)
-                }
-
+                handleLocation(loc.latitude, loc.longitude)
             } else {
-                locationText.text = "Location not available"
+                fusedClient.requestLocationUpdates(
+                    locationRequest,
+                    object : LocationCallback() {
+                        override fun onLocationResult(result: LocationResult) {
+                            val l = result.lastLocation ?: return
+                            handleLocation(l.latitude, l.longitude)
+                            fusedClient.removeLocationUpdates(this)
+                        }
+                    },
+                    mainLooper
+                )
             }
+        }
+
+        // Marker click → open navigation in Google Maps
+        mMap.setOnMarkerClickListener { marker ->
+
+            if (marker.position != userLatLng) {
+
+                val uri = Uri.parse(
+                    "google.navigation:q=${marker.position.latitude},${marker.position.longitude}"
+                )
+
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.setPackage("com.google.android.apps.maps")
+                startActivity(intent)
+            }
+
+            true
         }
     }
 
-    // ✅ NEW — map dashboard type → keyword
-    private fun getKeyword(type: String): String {
+    private fun handleLocation(lat: Double, lng: Double) {
+
+        userLatLng = LatLng(lat, lng)
+
+        mMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(userLatLng!!, 15f)
+        )
+
+        mMap.addMarker(
+            MarkerOptions()
+                .position(userLatLng!!)
+                .title("You are here")
+                .icon(BitmapDescriptorFactory.defaultMarker(
+                    BitmapDescriptorFactory.HUE_AZURE))
+        )
+
+        if (placeType != null) {
+
+            // Hide default POIs in filter mode
+            mMap.setMapStyle(
+                MapStyleOptions(
+                    """[
+                      {"featureType":"poi","stylers":[{"visibility":"off"}]},
+                      {"featureType":"transit","stylers":[{"visibility":"off"}]}
+                    ]"""
+                )
+            )
+
+            searchNearby(getPlaceTypeParam(placeType!!), lat, lng)
+        }
+    }
+
+    // ✅ CORRECT TYPE PARAMETER (IMPORTANT FIX)
+    private fun getPlaceTypeParam(type: String): String {
         return when (type) {
-            "hospital" -> "wheelchair accessible hospital"
-            "pharmacy" -> "medical shop"
-            "wheelchair accessible toilet" -> "accessible toilet"
-            "wheelchair repair" -> "wheelchair repair"
-            "disability ngo" -> "disability ngo"
-            "police station" -> "police station"
-            else -> type
+            "hospital" -> "hospital"
+            "pharmacy" -> "pharmacy"
+            "police station" -> "police"
+            "wheelchair accessible toilet" -> "public_toilet"
+            "wheelchair repair" -> "hardware_store"
+            "disability ngo" -> "point_of_interest"
+            else -> "point_of_interest"
         }
     }
 
-    // ✅ NEW — call Places Nearby Search
+    // ✅ USING type= INSTEAD OF keyword=
+
     private fun searchNearby(keyword: String, lat: Double, lng: Double) {
-
-        val url =
-            "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
-                    "?location=$lat,$lng" +
-                    "&radius=3000" +
-                    "&keyword=$keyword" +
-                    "&key=${getString(R.string.google_maps_key)}"
-
-        thread {
-            try {
-                val result = URL(url).readText()
-                runOnUiThread {
-                    addMarkers(result)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        try {
+            val input = assets.open("dummy_places.json")
+            val json = input.bufferedReader().use { it.readText() }
+            addMarkers(json)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
-    // ✅ NEW — add markers from JSON
     private fun addMarkers(json: String) {
+
+        mMap.clear()
+
+        // Re-add user marker
+        userLatLng?.let {
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(it)
+                    .title("You are here")
+                    .icon(BitmapDescriptorFactory.defaultMarker(
+                        BitmapDescriptorFactory.HUE_AZURE))
+            )
+        }
+
         val obj = JSONObject(json)
         val results = obj.getJSONArray("results")
 
+        locationText.text = "Found ${results.length()} places"
+
+        val hue = when (placeType) {
+            "hospital" -> BitmapDescriptorFactory.HUE_RED
+            "pharmacy" -> BitmapDescriptorFactory.HUE_GREEN
+            "wheelchair accessible toilet" -> BitmapDescriptorFactory.HUE_ORANGE
+            "wheelchair repair" -> BitmapDescriptorFactory.HUE_VIOLET
+            "disability ngo" -> BitmapDescriptorFactory.HUE_YELLOW
+            "police station" -> BitmapDescriptorFactory.HUE_BLUE
+            else -> BitmapDescriptorFactory.HUE_ROSE
+        }
+
         for (i in 0 until results.length()) {
+
             val place = results.getJSONObject(i)
+
             val loc = place.getJSONObject("geometry")
                 .getJSONObject("location")
 
@@ -137,6 +202,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 MarkerOptions()
                     .position(LatLng(lat, lng))
                     .title(name)
+                    .icon(BitmapDescriptorFactory.defaultMarker(hue))
             )
         }
     }

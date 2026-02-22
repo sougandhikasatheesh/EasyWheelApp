@@ -6,6 +6,10 @@
     <string name="location_format">Latitude: %1$.6f\nLongitude: %2$.6f</string>
     <string name="location_unavailable">Unable to fetch location. Try again.</string>
     <string name="google_maps_key">AIzaSyB6VkogZkNOdwJ0K8QcLJYfbjCrvg9fBwA</string>
+    <string name="loc_permission_denied">Location permission not granted</string>
+    <string name="marker_you_are_here">You are here</string>
+    <string name="loc_loaded">Location loaded on map</string>
+    <string name="loc_not_available">Location not available</string>
 
     <!-- Role selection screen -->
     <string name="easywheel_title">EASY WHEEL</string>
