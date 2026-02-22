@@ -26,6 +26,7 @@
         <activity android:name=".UserSelectionActivity"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MobilityDashboardActivity" />
+        <activity android:name=".AdminDashboardActivity" />
         <activity android:name=".MapActivity" />
 
         <!-- Main Activity -->
