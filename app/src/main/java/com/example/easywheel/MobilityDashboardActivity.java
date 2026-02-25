@@ -44,6 +44,8 @@ public class MobilityDashboardActivity extends AppCompatActivity {
             }
 
             if (item.getItemId() == R.id.nav_profile) {
+                Intent intent = new Intent(MobilityDashboardActivity.this, ProfileActivity.class);
+                startActivity(intent);
                 return true;
             }
 

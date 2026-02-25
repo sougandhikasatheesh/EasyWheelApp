@@ -65,14 +65,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="User ID:"
+            android:text="Email:"
             android:textColor="#FFFFFF"/>
 
         <EditText
             android:id="@+id/etUserId"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:hint="Start with EW following 3 digit, eg: EW123"
+            android:hint="Enter valid email"
             android:inputType="text"
             android:background="@drawable/bg_input"
             android:textColor="#FFFFFF"
@@ -158,7 +158,7 @@
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:text="NEXT"
+            android:text="Register"
             android:textStyle="bold"
             android:textColor="#333333"
             android:background="@drawable/bg_button"/>

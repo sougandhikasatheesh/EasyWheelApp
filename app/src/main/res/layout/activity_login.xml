@@ -38,17 +38,17 @@
         android:textColor="#DCE3EA"
         android:layout_marginBottom="48dp"/>
 
-    <!-- User ID Field -->
+    <!-- Email Field -->
     <EditText
-        android:id="@+id/etUser"
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:hint="User ID"
+        android:hint="Email"
         android:textColor="#FFFFFF"
         android:textColorHint="#E0E6EB"
         android:background="@drawable/bg_input"
         android:padding="16dp"
-        android:inputType="text"/>
+        android:inputType="textEmailAddress"/>
 
     <!-- Password Field -->
     <EditText
