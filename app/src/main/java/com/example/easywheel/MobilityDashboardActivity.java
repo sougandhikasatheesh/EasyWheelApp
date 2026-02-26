@@ -49,6 +49,12 @@ public class MobilityDashboardActivity extends AppCompatActivity {
                 return true;
             }
 
+            if (item.getItemId() == R.id.nav_emergency_page) {
+                Intent intent = new Intent(MobilityDashboardActivity.this, EmergencyActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
             return false;
         });
 

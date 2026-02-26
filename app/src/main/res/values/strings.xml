@@ -19,7 +19,6 @@
     <string name="admin">ADMIN</string>
 
     <!-- mobility dashboard -->
-    <string name="menu">menu</string>
     <string name="refresh">refresh</string>
     <string name="app_title">EASY WHEEL</string>
     <string name="hello_user">Hello, User</string>
@@ -35,4 +34,21 @@
 
     <!-- login screen -->
     <string name="create_account_underlined"><u>Create Account</u></string>
+
+    <string name="menu">Menu</string>
+    <string name="toolbar_title">EASY WHEEL</string>
+    <string name="disability_icon">Disability icon</string>
+
+    <string name="emergency_title">EMERGENCY</string>
+    <string name="sos_button">SOS Button</string>
+
+    <string name="call_caregiver">CALL\nCAREGIVER</string>
+    <string name="call_ambulance">CALL\nAMBULANCE</string>
+    <string name="call_police">CALL\nPOLICE</string>
+
+    <string name="live_location_title">Live Location Sharing</string>
+    <string name="live_location_desc">
+        Your location is being shared with emergency contacts
+    </string>
+
 </resources>
