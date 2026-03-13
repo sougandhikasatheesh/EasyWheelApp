@@ -44,11 +44,11 @@ public class AdminDashboardActivity extends AppCompatActivity {
         filteredList = new ArrayList<>();
 
         // Dummy medicine data
-        medicineList.add(new Medicine("Paracetamol", 50));
-        medicineList.add(new Medicine("Dolo 650", 30));
-        medicineList.add(new Medicine("Ibuprofen", 25));
-        medicineList.add(new Medicine("Amoxicillin", 15));
-        medicineList.add(new Medicine("Cetirizine", 40));
+        medicineList.add(new Medicine("Paracetamol", 50, "₹20"));
+        medicineList.add(new Medicine("Dolo 650", 30,"₹30"));
+        medicineList.add(new Medicine("Ibuprofen", 25,"₹35"));
+        medicineList.add(new Medicine("Amoxicillin", 15,"₹40"));
+        medicineList.add(new Medicine("Cetirizine", 40,"₹50"));
 
         filteredList.addAll(medicineList);
 
