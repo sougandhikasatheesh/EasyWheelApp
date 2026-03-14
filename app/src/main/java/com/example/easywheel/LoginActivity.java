@@ -45,11 +45,17 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener(LoginActivity.this, task -> {
                             if (task.isSuccessful()) {
                                 Intent intent;
+
                                 if ("admin".equals(userRole)) {
                                     intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+
+                                } else if ("caregiver".equals(userRole)) {
+                                    intent = new Intent(LoginActivity.this, CaregiverDashboardActivity.class);
+
                                 } else {
                                     intent = new Intent(LoginActivity.this, MobilityDashboardActivity.class);
                                 }
+
                                 startActivity(intent);
                                 finish();
                             } else {
