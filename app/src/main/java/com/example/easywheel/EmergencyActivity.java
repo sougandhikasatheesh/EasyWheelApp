@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -26,7 +25,6 @@ public class EmergencyActivity extends AppCompatActivity {
     private LocationCallback locationCallback;
 
     private static final int REQUEST_LOCATION_PERMISSION = 101;
-    private static final int REQUEST_SMS_PERMISSION = 102;
 
     private double currentLat = 0.0;
     private double currentLon = 0.0;
@@ -96,7 +94,7 @@ public class EmergencyActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // Send Emergency SMS
+    // Send Emergency SMS (UPDATED SAFE METHOD)
     private void sendEmergencyAlert() {
 
         if (ContextCompat.checkSelfPermission(this,
@@ -122,6 +120,7 @@ public class EmergencyActivity extends AppCompatActivity {
                         String message = "🚨 EMERGENCY! I need help.\nMy Location:\n" + mapsLink;
 
                         sendSMS(message);
+
                     } else {
                         Toast.makeText(this,
                                 "Unable to get location",
@@ -130,30 +129,16 @@ public class EmergencyActivity extends AppCompatActivity {
                 });
     }
 
+    // UPDATED SMS METHOD (NO SmsManager, NO permission needed)
     private void sendSMS(String message) {
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
+        String phoneNumber = "8891230108"; // caregiver number
 
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.SEND_SMS},
-                    REQUEST_SMS_PERMISSION);
-            return;
-        }
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.setData(Uri.parse("smsto:" + phoneNumber));
+        smsIntent.putExtra("sms_body", message);
 
-        String phoneNumber = "9876543210"; // 🔴 Replace with caregiver number
-
-        SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage(phoneNumber,
-                null,
-                message,
-                null,
-                null);
-
-        Toast.makeText(this,
-                "Emergency SMS Sent!",
-                Toast.LENGTH_LONG).show();
+        startActivity(smsIntent);
     }
 
     // Start Live Location Updates
