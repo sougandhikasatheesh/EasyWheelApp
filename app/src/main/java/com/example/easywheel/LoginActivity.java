@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+                intent.putExtra("USER_ROLE", userRole);
                 startActivity(intent);
             }
         });
