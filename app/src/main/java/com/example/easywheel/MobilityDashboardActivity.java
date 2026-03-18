@@ -15,7 +15,7 @@ public class MobilityDashboardActivity extends AppCompatActivity {
 
     private Button locationBtn;
 
-    // ✅ Grid button layouts (these are VIEW IDs, not drawable names)
+    // Grid buttons
     private LinearLayout btnToilet, btnHospital, btnMedicals, btnRepair, btnNgo, btnPolice;
 
     @Override
@@ -52,21 +52,19 @@ public class MobilityDashboardActivity extends AppCompatActivity {
             return false;
         });
 
-        // ✅ EXISTING — unchanged
+        // Location button (unchanged)
         locationBtn = findViewById(R.id.locationBtn);
 
         locationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MobilityDashboardActivity.this, MapActivity.class);
                 startActivityForResult(intent, 101);
             }
         });
 
-        // =========================
-        // ✅ NEW FEATURE — Grid Click → Map
-        // =========================
-
+        // Grid buttons
         btnToilet = findViewById(R.id.btnToilet);
         btnHospital = findViewById(R.id.btnHospital);
         btnMedicals = findViewById(R.id.btnMedicals);
@@ -74,14 +72,18 @@ public class MobilityDashboardActivity extends AppCompatActivity {
         btnNgo = findViewById(R.id.btnNgo);
         btnPolice = findViewById(R.id.btnPolice);
 
+        // Map features
         btnToilet.setOnClickListener(v ->
                 openMapWithType("wheelchair accessible toilet"));
 
         btnHospital.setOnClickListener(v ->
                 openMapWithType("hospital"));
 
-        btnMedicals.setOnClickListener(v ->
-                openMapWithType("pharmacy"));
+        // 🔹 CHANGED — opens medicine search instead of maps
+        btnMedicals.setOnClickListener(v -> {
+            Intent intent = new Intent(MobilityDashboardActivity.this, MedicineSearchActivity.class);
+            startActivity(intent);
+        });
 
         btnRepair.setOnClickListener(v ->
                 openMapWithType("wheelchair repair"));
@@ -93,19 +95,20 @@ public class MobilityDashboardActivity extends AppCompatActivity {
                 openMapWithType("police station"));
     }
 
-    // ✅ Helper — does not affect existing location logic
+    // Map helper
     private void openMapWithType(String type) {
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("PLACE_TYPE", type);
         startActivity(intent);
     }
 
-    // ✅ EXISTING — unchanged
+    // Location result (unchanged)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 101 && resultCode == RESULT_OK && data != null) {
+
             String address = data.getStringExtra("address");
             locationBtn.setText(address != null ? address : "Location unavailable");
         }
