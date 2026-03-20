@@ -3,11 +3,12 @@ package com.example.easywheel
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.net.toUri
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -15,8 +16,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import org.json.JSONObject
-import java.net.URL
-import kotlin.concurrent.thread
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -50,7 +49,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         fusedClient = LocationServices.getFusedLocationProviderClient(this)
 
         locationRequest = LocationRequest.Builder(
-            Priority.PRIORITY_HIGH_ACCURACY, 2000
+            Priority.PRIORITY_HIGH_ACCURACY,
+            2000
         ).build()
 
         if (ActivityCompat.checkSelfPermission(
@@ -87,9 +87,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             if (marker.position != userLatLng) {
 
-                val uri = Uri.parse(
+                val uri =
                     "google.navigation:q=${marker.position.latitude},${marker.position.longitude}"
-                )
+                        .toUri()
 
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 intent.setPackage("com.google.android.apps.maps")
@@ -104,6 +104,53 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         userLatLng = LatLng(lat, lng)
 
+        // ------------------------------
+        // Distance & ETA Algorithm Demo
+        // ------------------------------
+        val destinationLat = lat + 0.01
+        val destinationLng = lng + 0.01
+
+        val distance = NavigationUtils.calculateDistance(
+            lat,
+            lng,
+            destinationLat,
+            destinationLng
+        )
+
+        val eta = NavigationUtils.calculateETA(distance)
+
+        Log.d("NavigationAlgo", "Distance: $distance km")
+        Log.d("NavigationAlgo", "ETA: $eta hours")
+
+        // ------------------------------
+        // Accessibility Scoring Demo
+        // ------------------------------
+        val routeScore = AccessibilityRouteScorer.calculateScore(
+            hasRamp = true,
+            smoothPath = true,
+            obstacle = false,
+            stairs = false
+        )
+
+        Log.d("AccessibilityAlgo", "Route Score: $routeScore")
+
+        // ------------------------------
+        // Route Filtering Demo
+        // ------------------------------
+        val routes = listOf(
+            "Main Road - Ramp Available",
+            "Side Street - Stairs",
+            "Market Road - Smooth Path"
+        )
+
+        val filteredRoutes = RouteFilter.filterAccessibleRoutes(routes)
+
+        Log.d("FilterAlgo", "Filtered Routes: $filteredRoutes")
+
+        // ------------------------------
+        // Map UI
+        // ------------------------------
+
         mMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(userLatLng!!, 15f)
         )
@@ -111,9 +158,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(
             MarkerOptions()
                 .position(userLatLng!!)
-                .title("You are here")
-                .icon(BitmapDescriptorFactory.defaultMarker(
-                    BitmapDescriptorFactory.HUE_AZURE))
+                .title(getString(R.string.you_are_here))
+                .icon(
+                    BitmapDescriptorFactory.defaultMarker(
+                        BitmapDescriptorFactory.HUE_AZURE
+                    )
+                )
         )
 
         if (placeType != null) {
@@ -132,7 +182,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    // ✅ CORRECT TYPE PARAMETER (IMPORTANT FIX)
     private fun getPlaceTypeParam(type: String): String {
         return when (type) {
             "hospital" -> "hospital"
@@ -145,9 +194,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    // ✅ USING type= INSTEAD OF keyword=
-
     private fun searchNearby(keyword: String, lat: Double, lng: Double) {
+
+        // Using parameters to avoid warning
+        Log.d("SearchNearby", "Type: $keyword at $lat,$lng")
+
         try {
             val input = assets.open("dummy_places.json")
             val json = input.bufferedReader().use { it.readText() }
@@ -166,16 +217,22 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.addMarker(
                 MarkerOptions()
                     .position(it)
-                    .title("You are here")
-                    .icon(BitmapDescriptorFactory.defaultMarker(
-                        BitmapDescriptorFactory.HUE_AZURE))
+                    .title(getString(R.string.you_are_here))
+                    .icon(
+                        BitmapDescriptorFactory.defaultMarker(
+                            BitmapDescriptorFactory.HUE_AZURE
+                        )
+                    )
             )
         }
 
         val obj = JSONObject(json)
         val results = obj.getJSONArray("results")
 
-        locationText.text = "Found ${results.length()} places"
+        locationText.text = getString(
+            R.string.places_found,
+            results.length()
+        )
 
         val hue = when (placeType) {
             "hospital" -> BitmapDescriptorFactory.HUE_RED
