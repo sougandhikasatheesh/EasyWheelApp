@@ -35,6 +35,7 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".EmergencyActivity" />
         <activity android:name=".CaregiverDashboardActivity" />
+        <activity android:name=".CaregiverInboxActivity"/>
 
         <!-- Main Launcher -->
         <activity

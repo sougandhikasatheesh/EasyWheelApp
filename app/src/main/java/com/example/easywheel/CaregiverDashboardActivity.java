@@ -2,6 +2,8 @@ package com.example.easywheel;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -48,6 +50,12 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
             startActivity(new Intent(this, MapActivity.class));
         });
 
-        
+        ImageView chatIcon = findViewById(R.id.ic_chatmessage);
+
+        chatIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(CaregiverDashboardActivity.this,
+                    CaregiverInboxActivity.class);
+            startActivity(intent);
+        });
     }
 }

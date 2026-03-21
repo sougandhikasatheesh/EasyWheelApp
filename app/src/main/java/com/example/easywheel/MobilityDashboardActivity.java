@@ -152,7 +152,7 @@ public class MobilityDashboardActivity extends AppCompatActivity {
         }
     }
 
-    // ✅ OPTIONAL (Recommended)
+
     @Override
     protected void onResume() {
         super.onResume();

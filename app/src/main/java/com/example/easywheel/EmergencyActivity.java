@@ -129,6 +129,30 @@ public class EmergencyActivity extends AppCompatActivity {
 
                         sendSMS(message);
 
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                        String userId = com.google.firebase.auth.FirebaseAuth
+                                .getInstance()
+                                .getCurrentUser()
+                                .getUid();
+
+                        java.util.Map<String, Object> sosData = new java.util.HashMap<>();
+
+                        sosData.put("userId", userId);
+                        sosData.put("message", message);
+                        sosData.put("latitude", currentLat);
+                        sosData.put("longitude", currentLon);
+                        sosData.put("timestamp", System.currentTimeMillis());
+
+                        db.collection("sos_alerts")
+                                .add(sosData)
+                                .addOnSuccessListener(documentReference ->
+                                        Toast.makeText(this, "Alert sent to caregivers", Toast.LENGTH_SHORT).show()
+                                )
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(this, "Failed to save alert", Toast.LENGTH_SHORT).show()
+                                );
+
                     } else {
                         Toast.makeText(this,
                                 "Unable to get location",
