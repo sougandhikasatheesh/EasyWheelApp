@@ -93,8 +93,10 @@ public class MobilityDashboardActivity extends AppCompatActivity {
         btnHospital.setOnClickListener(v ->
                 openMapWithType("hospital"));
 
-        btnMedicals.setOnClickListener(v ->
-                openMapWithType("pharmacy"));
+        btnMedicals.setOnClickListener(v -> {
+            Intent intent = new Intent(MobilityDashboardActivity.this, MedicineSearchActivity.class);
+            startActivity(intent);
+        });
 
         btnRepair.setOnClickListener(v ->
                 openMapWithType("wheelchair repair"));
