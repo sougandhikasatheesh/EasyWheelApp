@@ -33,6 +33,8 @@
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".MedicineSearchActivity" />
         <activity android:name=".MapActivity" />
+        <activity android:name=".EmergencyActivity" />
+        <activity android:name=".CaregiverDashboardActivity" />
 
         <!-- Main Launcher -->
         <activity
