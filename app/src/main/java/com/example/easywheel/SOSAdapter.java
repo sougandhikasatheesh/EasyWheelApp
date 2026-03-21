@@ -1,5 +1,7 @@
 package com.example.easywheel;
 
+import android.content.Intent;
+import android.net.Uri; // ✅ IMPORTANT IMPORT
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,15 @@ public class SOSAdapter extends RecyclerView.Adapter<SOSAdapter.ViewHolder> {
 
         holder.tvMessage.setText(model.message);
         holder.tvTime.setText(String.valueOf(model.timestamp));
+
+        // ✅ CLICK HANDLER (CORRECT PLACE)
+        holder.itemView.setOnClickListener(v -> {
+            if (model.locationLink != null) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(model.locationLink));
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@color/easywheel_primary"
     tools:context=".MedicineSearchActivity">
 
     <EditText
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search medicine"
+        android:textColor="#FFFFFF"
         android:padding="12dp"/>
 
     <Button
