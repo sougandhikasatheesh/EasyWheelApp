@@ -51,4 +51,6 @@
         Your location is being shared with emergency contacts
     </string>
 
+    <string name="places_found">Found %1$d places</string>
+    <string name="you_are_here">You are here</string>
 </resources>
