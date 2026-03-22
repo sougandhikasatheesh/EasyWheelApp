@@ -2,7 +2,6 @@ package com.example.easywheel;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -11,51 +10,48 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class CaregiverDashboardActivity extends AppCompatActivity {
 
-    // Dashboard features
-    LinearLayout trackLayout, hospitalLayout, medicalLayout, repairLayout;
-
-    // Bottom navigation
-    LinearLayout bottomHome, bottomLocation, bottomChat;
+    LinearLayout hospitalLayout, medicalLayout, repairLayout;
+    ImageView home, location, chat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caregiver_dashboard);
 
-        // 🔹 Initialize Top Features
-        trackLayout = findViewById(R.id.trackLayout);
+        // Features
         hospitalLayout = findViewById(R.id.hospitalLayout);
         medicalLayout = findViewById(R.id.medicalLayout);
         repairLayout = findViewById(R.id.repairLayout);
 
-        // 🔹 Initialize Bottom Navigation
-        LinearLayout bottomNav = findViewById(R.id.bottomNav);
-        bottomHome = (LinearLayout) bottomNav.getChildAt(0);
-        bottomLocation = (LinearLayout) bottomNav.getChildAt(1);
-        bottomChat = (LinearLayout) bottomNav.getChildAt(2);
+        // Bottom nav
+        home = findViewById(R.id.ic_home);
+        location = findViewById(R.id.ic_location);
+        chat = findViewById(R.id.ic_chatmessage);
 
+        // Feature clicks
+        hospitalLayout.setOnClickListener(v ->
+                startActivity(new Intent(this, MapActivity.class))
+        );
 
+        medicalLayout.setOnClickListener(v ->
+                startActivity(new Intent(this, MedicineSearchActivity.class))
+        );
 
+        repairLayout.setOnClickListener(v ->
+                Toast.makeText(this, "Repair coming soon", Toast.LENGTH_SHORT).show()
+        );
 
-        // =========================
-        // 🔻 BOTTOM NAVIGATION
-        // =========================
+        // Bottom nav clicks
+        home.setOnClickListener(v ->
+                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
+        );
 
-        bottomHome.setOnClickListener(v -> {
-            Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-        });
+        location.setOnClickListener(v ->
+                startActivity(new Intent(this, MapActivity.class))
+        );
 
-        bottomLocation.setOnClickListener(v -> {
-            Toast.makeText(this, "Location", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MapActivity.class));
-        });
-
-        ImageView chatIcon = findViewById(R.id.ic_chatmessage);
-
-        chatIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(CaregiverDashboardActivity.this,
-                    CaregiverInboxActivity.class);
-            startActivity(intent);
-        });
+        chat.setOnClickListener(v ->
+                startActivity(new Intent(this, CaregiverInboxActivity.class))
+        );
     }
 }
