@@ -87,6 +87,7 @@
                 android:hint="Blood Group"
                 android:background="@android:drawable/edit_text"
                 android:padding="6dp"
+                android:textColor="#000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -96,6 +97,7 @@
                 android:hint="Medical Condition"
                 android:background="@android:drawable/edit_text"
                 android:padding="6dp"
+                android:textColor="#000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -105,6 +107,7 @@
                 android:hint="Allergy"
                 android:background="@android:drawable/edit_text"
                 android:padding="6dp"
+                android:textColor="#000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -133,6 +136,7 @@
             android:inputType="phone"
             android:background="@android:drawable/edit_text"
             android:padding="6dp"
+                android:textColor="#000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -142,6 +146,7 @@
                 android:hint="Doctor Name"
                 android:background="@android:drawable/edit_text"
                 android:padding="6dp"
+                android:textColor="#000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -152,6 +157,7 @@
                 android:inputType="phone"
                 android:background="@android:drawable/edit_text"
                 android:padding="6dp"
+                android:textColor="#000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
