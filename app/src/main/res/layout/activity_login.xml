@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="#3F5368"
+    android:background="@color/easywheel_primary"
     android:padding="24dp">
 
     <!-- Logo -->
@@ -71,7 +71,7 @@
         android:layout_marginTop="28dp"
         android:background="@drawable/bg_button"
         android:text="LOGIN"
-        android:textColor="#333333"
+        android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
     <TextView

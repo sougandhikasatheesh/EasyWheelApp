@@ -8,6 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +22,10 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.location.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class EmergencyActivity extends AppCompatActivity {
 
@@ -41,16 +49,15 @@ public class EmergencyActivity extends AppCompatActivity {
         MaterialButton btnCallPolice = findViewById(R.id.btnCallPolice);
         ImageButton btnSos = findViewById(R.id.btnSos);
         SwitchCompat switchLiveLocation = findViewById(R.id.switchLiveLocation);
+        MaterialButton btnCallCaregiver = findViewById(R.id.btnCallCaregiver);
 
         // Dialer buttons
         btnCallAmbulance.setOnClickListener(v -> openDialer("108"));
         btnCallPolice.setOnClickListener(v -> openDialer("100"));
 
         // SOS Button
-        btnSos.setOnClickListener(v -> {
-            openDialer("112");
-            sendEmergencyAlert();
-        });
+        btnSos.setOnClickListener(v -> sendEmergencyAlert());
+        btnCallCaregiver.setOnClickListener(v -> fetchCaregivers());
 
         // Live location switch
         switchLiveLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -94,7 +101,7 @@ public class EmergencyActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // Send Emergency SMS (UPDATED SAFE METHOD)
+    // Send Emergency Alert (username instead of UID)
     private void sendEmergencyAlert() {
 
         if (ContextCompat.checkSelfPermission(this,
@@ -114,12 +121,51 @@ public class EmergencyActivity extends AppCompatActivity {
                         currentLat = location.getLatitude();
                         currentLon = location.getLongitude();
 
-                        String mapsLink = "https://maps.google.com/?q="
-                                + currentLat + "," + currentLon;
+                        String userId = FirebaseAuth.getInstance()
+                                .getCurrentUser()
+                                .getUid();
 
-                        String message = "🚨 EMERGENCY! I need help.\nMy Location:\n" + mapsLink;
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                        sendSMS(message);
+                        // Fetch username from users collection
+                        db.collection("users")
+                                .document(userId)
+                                .get()
+                                .addOnSuccessListener(document -> {
+
+                                    String username = document.getString("username");
+                                    if (username == null || username.isEmpty()) {
+                                        username = "Unknown User";
+                                    }
+
+                                    String message = "User: " + username;
+                                    String mapsLink = "https://maps.google.com/?q="
+                                            + currentLat + "," + currentLon;
+
+                                    // Send SMS to caregivers
+                                    sendSMS(message);
+
+                                    // Save SOS alert to Firestore
+                                    Map<String, Object> sosData = new HashMap<>();
+                                    sosData.put("message", message);
+                                    sosData.put("userId", userId);
+                                    sosData.put("username", username); // store readable name
+                                    sosData.put("locationLink", mapsLink);
+                                    sosData.put("timestamp", System.currentTimeMillis());
+
+                                    db.collection("sos_alerts")
+                                            .add(sosData)
+                                            .addOnSuccessListener(docRef ->
+                                                    Toast.makeText(this, "Alert sent to caregivers", Toast.LENGTH_SHORT).show()
+                                            )
+                                            .addOnFailureListener(e ->
+                                                    Toast.makeText(this, "Failed to save alert", Toast.LENGTH_SHORT).show()
+                                            );
+
+                                })
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(this, "Failed to fetch username", Toast.LENGTH_SHORT).show()
+                                );
 
                     } else {
                         Toast.makeText(this,
@@ -129,16 +175,94 @@ public class EmergencyActivity extends AppCompatActivity {
                 });
     }
 
-    // UPDATED SMS METHOD (NO SmsManager, NO permission needed)
+    // Send SMS to all caregivers
     private void sendSMS(String message) {
 
-        String phoneNumber = "8891230108"; // caregiver number
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-        smsIntent.setData(Uri.parse("smsto:" + phoneNumber));
-        smsIntent.putExtra("sms_body", message);
+        db.collection("users")
+                .whereEqualTo("role", "caregiver")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
 
-        startActivity(smsIntent);
+                    StringBuilder numbers = new StringBuilder();
+
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        String phone = doc.getString("phone");
+
+                        if (phone != null && !phone.isEmpty()) {
+                            if (numbers.length() > 0) {
+                                numbers.append(";");
+                            }
+                            numbers.append(phone);
+                        }
+                    }
+
+                    if (numbers.length() > 0) {
+
+                        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+                        smsIntent.setData(Uri.parse("smsto:" + numbers.toString()));
+                        smsIntent.putExtra("sms_body", message);
+
+                        startActivity(smsIntent);
+
+                    } else {
+                        Toast.makeText(this,
+                                "No caregivers found",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this,
+                                "Failed to fetch caregivers",
+                                Toast.LENGTH_SHORT).show());
+    }
+
+    private void fetchCaregivers() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users")
+                .whereEqualTo("role", "caregiver")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                    ArrayList<String> names = new ArrayList<>();
+                    ArrayList<String> phones = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
+                        String name = doc.getString("username");
+                        String phone = doc.getString("phone");
+
+                        if (name != null && phone != null) {
+                            names.add(name);
+                            phones.add(phone);
+                        }
+                    }
+
+                    showCaregiverDialog(names, phones);
+
+                });
+    }
+
+    private void showCaregiverDialog(ArrayList<String> names, ArrayList<String> phones) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Caregiver to Call");
+
+        String[] nameArray = names.toArray(new String[0]);
+
+        builder.setItems(nameArray, (dialog, which) -> {
+            String phone = phones.get(which);
+
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + phone));
+            startActivity(intent);
+        });
+
+        builder.show();
     }
 
     // Start Live Location Updates

@@ -2,13 +2,11 @@ package com.example.easywheel;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +15,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +23,9 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        // Get the role passed from LoginActivity (which got it from UserSelectionActivity)
+        String userRole = getIntent().getStringExtra("USER_ROLE"); // mobility_user / caregiver / admin
 
         EditText etUserName = findViewById(R.id.etUserName);
         EditText etUserId = findViewById(R.id.etUserId);
@@ -69,11 +71,13 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                             String userId = mAuth.getCurrentUser().getUid();
 
+                            // Create user data map including the role
                             Map<String, Object> userMap = new HashMap<>();
                             userMap.put("username", username);
                             userMap.put("age", age);
                             userMap.put("phone", phone);
                             userMap.put("email", email);
+                            userMap.put("role", userRole); // <-- SAVE USER TYPE HERE
 
                             db.collection("users").document(userId)
                                     .set(userMap)

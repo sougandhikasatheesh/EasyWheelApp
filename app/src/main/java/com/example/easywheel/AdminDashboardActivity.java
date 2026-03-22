@@ -10,7 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AdminDashboardActivity extends AppCompatActivity {
@@ -43,12 +47,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
         medicineList = new ArrayList<>();
         filteredList = new ArrayList<>();
 
-        // Dummy medicine data
-        medicineList.add(new Medicine("Paracetamol", 50));
-        medicineList.add(new Medicine("Dolo 650", 30));
-        medicineList.add(new Medicine("Ibuprofen", 25));
-        medicineList.add(new Medicine("Amoxicillin", 15));
-        medicineList.add(new Medicine("Cetirizine", 40));
+        // Dummy medicine data (UI display)
+        medicineList.add(new Medicine("Paracetamol", 50, "₹20"));
+        medicineList.add(new Medicine("Dolo 650", 30, "₹30"));
+        medicineList.add(new Medicine("Ibuprofen", 25, "₹35"));
+        medicineList.add(new Medicine("Amoxicillin", 15, "₹40"));
+        medicineList.add(new Medicine("Cetirizine", 40, "₹50"));
 
         filteredList.addAll(medicineList);
 
@@ -56,6 +60,11 @@ public class AdminDashboardActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         setupSearch();
+
+        // =========================
+        // ADD TEST DATA TO FIREBASE
+        // =========================
+        addTestMedicinesToFirebase();
     }
 
     // ===============================
@@ -88,5 +97,49 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
 
         adapter.notifyDataSetChanged();
+    }
+
+    // ===============================
+    // FIREBASE TEST DATA FUNCTION
+    // ===============================
+    private void addTestMedicinesToFirebase() {
+
+        DatabaseReference databaseReference =
+                FirebaseDatabase.getInstance().getReference("medicines");
+
+        // PARACETAMOL
+        HashMap<String, Object> shop1 = new HashMap<>();
+        shop1.put("shopName", "City Medicals");
+        shop1.put("quantity", 50);
+        shop1.put("price", 20);
+
+        HashMap<String, Object> shop2 = new HashMap<>();
+        shop2.put("shopName", "Apollo Pharmacy");
+        shop2.put("quantity", 30);
+        shop2.put("price", 18);
+
+        HashMap<String, Object> shop3 = new HashMap<>();
+        shop3.put("shopName", "MedPlus");
+        shop3.put("quantity", 40);
+        shop3.put("price", 22);
+
+        databaseReference.child("paracetamol").child("shop1").setValue(shop1);
+        databaseReference.child("paracetamol").child("shop2").setValue(shop2);
+        databaseReference.child("paracetamol").child("shop3").setValue(shop3);
+
+
+        // DOLO650
+        HashMap<String, Object> shop4 = new HashMap<>();
+        shop4.put("shopName", "City Medicals");
+        shop4.put("quantity", 25);
+        shop4.put("price", 35);
+
+        HashMap<String, Object> shop5 = new HashMap<>();
+        shop5.put("shopName", "Apollo Pharmacy");
+        shop5.put("quantity", 15);
+        shop5.put("price", 32);
+
+        databaseReference.child("dolo650").child("shop1").setValue(shop4);
+        databaseReference.child("dolo650").child("shop2").setValue(shop5);
     }
 }

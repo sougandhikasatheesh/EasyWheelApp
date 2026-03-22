@@ -16,6 +16,7 @@ public class UserSelectionActivity extends AppCompatActivity {
 
         LinearLayout btnMobility = findViewById(R.id.btnMobility);
         LinearLayout btnAdmin = findViewById(R.id.btnAdmin);
+        LinearLayout btnCaregiver = findViewById(R.id.btnCare);
 
         // Mobility User Click
         btnMobility.setOnClickListener(view -> {
@@ -28,6 +29,11 @@ public class UserSelectionActivity extends AppCompatActivity {
         btnAdmin.setOnClickListener(view -> {
             Intent intent = new Intent(UserSelectionActivity.this, LoginActivity.class);
             intent.putExtra("USER_ROLE", "admin");
+            startActivity(intent);
+        });
+        btnCaregiver.setOnClickListener(view -> {
+            Intent intent = new Intent(UserSelectionActivity.this, LoginActivity.class);
+            intent.putExtra("USER_ROLE", "caregiver");
             startActivity(intent);
         });
     }
