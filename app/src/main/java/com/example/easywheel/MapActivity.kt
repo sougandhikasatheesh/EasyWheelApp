@@ -113,11 +113,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         )
 
         // Show toast to confirm category selection
-        placeType?.let {
-            Toast.makeText(this, "Fetching nearby ${it}s...", Toast.LENGTH_SHORT).show()
+        if (!placeType.isNullOrEmpty()) {
+            fetchNearbyPlacesMock(placeType ?: "")
         }
-
-        fetchNearbyPlacesMock(placeType ?: "")
     }
 
     private fun fetchNearbyPlacesMock(category: String) {

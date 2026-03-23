@@ -65,12 +65,6 @@ public class MobilityDashboardActivity extends AppCompatActivity {
             return false;
         });
 
-        LinearLayout btnSearchMedicine = findViewById(R.id.btnSearchMedicine);
-
-        btnSearchMedicine.setOnClickListener(v -> {
-            startActivity(new Intent(this, MedicineSearchActivity.class));
-        });
-
         // ✅ EXISTING — unchanged
         locationBtn = findViewById(R.id.locationBtn);
 
