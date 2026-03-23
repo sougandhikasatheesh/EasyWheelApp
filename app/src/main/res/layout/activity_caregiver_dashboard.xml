@@ -157,11 +157,6 @@
             android:gravity="center"
             android:padding="30dp">
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="64dp"
-                android:src="@drawable/ic_medicinesearch"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,6 +164,30 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="11dp"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ic_trackusers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="30dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_trackusers"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Track Users"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="11dp"/>
+        </LinearLayout>
+
+
 
     </GridLayout>
 
