@@ -138,9 +138,14 @@ public class EmergencyActivity extends AppCompatActivity {
                                         username = "Unknown User";
                                     }
 
-                                    String message = "User: " + username;
                                     String mapsLink = "https://maps.google.com/?q="
                                             + currentLat + "," + currentLon;
+
+                                    // Enhanced Emergency Message
+                                    String message = "🚨 EMERGENCY ALERT 🚨\n\n"
+                                            + "User: " + username + "\n"
+                                            + "Help me! I need immediate assistance.\n\n"
+                                            + "My Location:\n" + mapsLink;
 
                                     // Send SMS to caregivers
                                     sendSMS(message);

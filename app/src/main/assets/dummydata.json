@@ -1,0 +1,42 @@
+{
+  "hospital": [
+    { "name": "Wheelchair Friendly Hospital A", "lat": 8.4880, "lng": 76.9480, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Wheelchair Friendly Hospital B", "lat": 8.4855, "lng": 76.9525, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": true },
+    { "name": "Wheelchair Friendly Hospital C", "lat": 8.4900, "lng": 76.9550, "hasRamp": true, "smoothPath": false, "stairs": false, "obstacle": false },
+    { "name": "Wheelchair Friendly Hospital D", "lat": 8.4825, "lng": 76.9475, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Wheelchair Friendly Hospital E", "lat": 8.4910, "lng": 76.9530, "hasRamp": true, "smoothPath": false, "stairs": false, "obstacle": true },
+    { "name": "Wheelchair Friendly Hospital F", "lat": 8.4865, "lng": 76.9495, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false }
+  ],
+  "police_station": [
+    { "name": "Central Police Station", "lat": 8.4890, "lng": 76.9500, "hasRamp": false, "smoothPath": true, "stairs": true, "obstacle": false },
+    { "name": "North Police Station", "lat": 8.4870, "lng": 76.9465, "hasRamp": false, "smoothPath": true, "stairs": true, "obstacle": true },
+    { "name": "East Police Station", "lat": 8.4920, "lng": 76.9490, "hasRamp": false, "smoothPath": false, "stairs": true, "obstacle": false },
+    { "name": "South Police Station", "lat": 8.4845, "lng": 76.9515, "hasRamp": false, "smoothPath": true, "stairs": true, "obstacle": true },
+    { "name": "West Police Station", "lat": 8.4855, "lng": 76.9540, "hasRamp": false, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Trivandrum City Police HQ", "lat": 8.4860, "lng": 76.9470, "hasRamp": false, "smoothPath": false, "stairs": true, "obstacle": false }
+  ],
+  "ngo": [
+    { "name": "Disability Support NGO A", "lat": 8.4860, "lng": 76.9510, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Disability Support NGO B", "lat": 8.4885, "lng": 76.9540, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": true },
+    { "name": "Disability Support NGO C", "lat": 8.4840, "lng": 76.9470, "hasRamp": true, "smoothPath": false, "stairs": false, "obstacle": false },
+    { "name": "Disability Support NGO D", "lat": 8.4850, "lng": 76.9490, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Disability Support NGO E", "lat": 8.4875, "lng": 76.9520, "hasRamp": true, "smoothPath": false, "stairs": false, "obstacle": true },
+    { "name": "Disability Support NGO F", "lat": 8.4900, "lng": 76.9485, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false }
+  ],
+  "repair_shop": [
+    { "name": "Wheelchair Repair Shop A", "lat": 8.4850, "lng": 76.9495, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Wheelchair Repair Shop B", "lat": 8.4875, "lng": 76.9530, "hasRamp": true, "smoothPath": false, "stairs": false, "obstacle": false },
+    { "name": "Wheelchair Repair Shop C", "lat": 8.4900, "lng": 76.9515, "hasRamp": false, "smoothPath": true, "stairs": false, "obstacle": true },
+    { "name": "Wheelchair Repair Shop D", "lat": 8.4865, "lng": 76.9500, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Wheelchair Repair Shop E", "lat": 8.4880, "lng": 76.9525, "hasRamp": true, "smoothPath": false, "stairs": false, "obstacle": true },
+    { "name": "Wheelchair Repair Shop F", "lat": 8.4845, "lng": 76.9485, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false }
+  ],
+  "toilet": [
+    { "name": "Accessible Toilet A", "lat": 8.4865, "lng": 76.9505, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Accessible Toilet B", "lat": 8.4880, "lng": 76.9520, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": true },
+    { "name": "Accessible Toilet C", "lat": 8.4845, "lng": 76.9485, "hasRamp": true, "smoothPath": false, "stairs": false, "obstacle": false },
+    { "name": "Accessible Toilet D", "lat": 8.4855, "lng": 76.9490, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false },
+    { "name": "Accessible Toilet E", "lat": 8.4870, "lng": 76.9510, "hasRamp": true, "smoothPath": false, "stairs": false, "obstacle": true },
+    { "name": "Accessible Toilet F", "lat": 8.4890, "lng": 76.9530, "hasRamp": true, "smoothPath": true, "stairs": false, "obstacle": false }
+  ]
+}
