@@ -31,6 +31,7 @@
     <string name="repair_shops">Repair Shops</string>
     <string name="ngos">NGOs</string>
     <string name="police_stations">Police Stations</string>
+    <string name="medicine_search">Search Medicine</string>
 
     <!-- login screen -->
     <string name="create_account_underlined"><u>Create Account</u></string>
