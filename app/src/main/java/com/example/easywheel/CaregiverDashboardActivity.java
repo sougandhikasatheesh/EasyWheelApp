@@ -2,7 +2,6 @@ package com.example.easywheel;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CaregiverDashboardActivity extends AppCompatActivity {
 
     // Dashboard features
-    private LinearLayout hospitalLayout, medicalLayout, repairLayout;
+    private LinearLayout hospitalLayout, medicalLayout, repairLayout, trackLayout;
 
     // Bottom navigation
     private LinearLayout bottomHome, bottomLocation, bottomChat;
@@ -24,6 +23,14 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caregiver_dashboard);
+
+        // ===== Track Users Feature (UPDATED) =====
+        trackLayout = findViewById(R.id.ic_trackusers);
+
+        trackLayout.setOnClickListener(v -> {
+            startActivity(new Intent(CaregiverDashboardActivity.this,
+                    TrackUsersActivity.class));
+        });
 
         // ===== Location button =====
         locationBtn = findViewById(R.id.locationBtn);
@@ -37,7 +44,7 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
         medicalLayout = findViewById(R.id.medicalLayout);
         repairLayout = findViewById(R.id.repairLayout);
 
-        // Hospital → MapActivity
+        // Hospital → Map
         hospitalLayout.setOnClickListener(v -> openMapWithType("hospital"));
 
         // Medicals → MedicineSearchActivity
@@ -46,10 +53,10 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Repair → MapActivity
+        // Repair → Map
         repairLayout.setOnClickListener(v -> openMapWithType("wheelchair repair"));
 
-        // ===== Initialize Bottom Navigation =====
+        // ===== Bottom Navigation =====
         LinearLayout bottomNav = findViewById(R.id.bottomNav);
         bottomHome = (LinearLayout) bottomNav.getChildAt(0);
         bottomLocation = (LinearLayout) bottomNav.getChildAt(1);
@@ -71,14 +78,14 @@ public class CaregiverDashboardActivity extends AppCompatActivity {
         });
     }
 
-    // ===== Helper method to open MapActivity with place type =====
+    // ===== Open Map with type =====
     private void openMapWithType(String type) {
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("PLACE_TYPE", type);
         startActivity(intent);
     }
 
-    // ===== Receive location from MapActivity =====
+    // ===== Receive location =====
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

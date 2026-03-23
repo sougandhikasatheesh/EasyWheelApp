@@ -36,6 +36,9 @@
         <activity android:name=".EmergencyActivity" />
         <activity android:name=".CaregiverDashboardActivity" />
         <activity android:name=".CaregiverInboxActivity"/>
+        <activity android:name=".TrackUsersActivity" />
+        <activity android:name=".CaregiverViewProfileActivity" />
+
 
         <!-- Main Launcher -->
         <activity
