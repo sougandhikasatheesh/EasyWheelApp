@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="easywheel_bg">#2F4054</color>
-    <color name="easywheel_button">#E6E6E6</color>
-    <color name="easywheel_text_dark">#222222</color>
+
+    <!-- Original App Colors -->
+    <color name="easywheel_primary">#23374D</color>
+    <color name="easywheel_bg">#FFFFFF</color>
+    <color name="easywheel_text">#000000</color>
+    <color name="easywheel_button">#102A43</color>
+    <color name="easywheel_text_dark">#212121</color>
+
+    <!-- Emergency Screen Colors -->
+    <color name="emergency_colorPrimary">#23374D</color>
+    <color name="emergency_colorPrimaryDark">#102A43</color>
+    <color name="emergency_colorAccent">#00796B</color>
+    <color name="emergency_white">#FFFFFF</color>
+    <color name="emergency_black">#000000</color>
+
+    <!-- Missing Common Color -->
     <color name="white">#FFFFFF</color>
-    <color name="easywheel_primary">#3E5166</color>
-    <color name="easywheel_text">#2D3748</color>
+
 </resources>

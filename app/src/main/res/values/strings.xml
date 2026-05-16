@@ -5,6 +5,11 @@
     <string name="location_permission_denied">Location permission denied</string>
     <string name="location_format">Latitude: %1$.6f\nLongitude: %2$.6f</string>
     <string name="location_unavailable">Unable to fetch location. Try again.</string>
+    <string name="google_maps_key">AIzaSyB6VkogZkNOdwJ0K8QcLJYfbjCrvg9fBwA</string>
+    <string name="loc_permission_denied">Location permission not granted</string>
+    <string name="marker_you_are_here">You are here</string>
+    <string name="loc_loaded">Location loaded on map</string>
+    <string name="loc_not_available">Location not available</string>
 
     <!-- Role selection screen -->
     <string name="easywheel_title">EASY WHEEL</string>
@@ -13,4 +18,40 @@
     <string name="caregivers">CAREGIVERS</string>
     <string name="admin">ADMIN</string>
 
+    <!-- mobility dashboard -->
+    <string name="refresh">refresh</string>
+    <string name="app_title">EASY WHEEL</string>
+    <string name="hello_user">Hello, User</string>
+    <string name="choose_location">Choose your Current Location</string>
+    <string name="search_hint">Search hospitals, medical shops, repair shops...</string>
+
+    <string name="accessible_toilets">Accessible Toilets</string>
+    <string name="hospital">Hospital</string>
+    <string name="medicals">Medicals</string>
+    <string name="repair_shops">Repair Shops</string>
+    <string name="ngos">NGOs</string>
+    <string name="police_stations">Police Stations</string>
+    <string name="medicine_search">Search Medicine</string>
+
+    <!-- login screen -->
+    <string name="create_account_underlined"><u>Create Account</u></string>
+
+    <string name="menu">Menu</string>
+    <string name="toolbar_title">EASY WHEEL</string>
+    <string name="disability_icon">Disability icon</string>
+
+    <string name="emergency_title">EMERGENCY</string>
+    <string name="sos_button">SOS Button</string>
+
+    <string name="call_caregiver">CALL\nCAREGIVER</string>
+    <string name="call_ambulance">CALL\nAMBULANCE</string>
+    <string name="call_police">CALL\nPOLICE</string>
+
+    <string name="live_location_title">Live Location Sharing</string>
+    <string name="live_location_desc">
+        Your location is being shared with emergency contacts
+    </string>
+
+    <string name="places_found">Found %1$d places</string>
+    <string name="you_are_here">You are here</string>
 </resources>

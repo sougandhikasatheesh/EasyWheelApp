@@ -14,16 +14,27 @@ public class UserSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role_select);
 
-        // Find the "Mobility User" layout
         LinearLayout btnMobility = findViewById(R.id.btnMobility);
+        LinearLayout btnAdmin = findViewById(R.id.btnAdmin);
+        LinearLayout btnCaregiver = findViewById(R.id.btnCare);
 
-        // Navigate to LoginActivity on click
-        btnMobility.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserSelectionActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+        // Mobility User Click
+        btnMobility.setOnClickListener(view -> {
+            Intent intent = new Intent(UserSelectionActivity.this, LoginActivity.class);
+            intent.putExtra("USER_ROLE", "mobility");
+            startActivity(intent);
+        });
+
+        // Admin Click
+        btnAdmin.setOnClickListener(view -> {
+            Intent intent = new Intent(UserSelectionActivity.this, LoginActivity.class);
+            intent.putExtra("USER_ROLE", "admin");
+            startActivity(intent);
+        });
+        btnCaregiver.setOnClickListener(view -> {
+            Intent intent = new Intent(UserSelectionActivity.this, LoginActivity.class);
+            intent.putExtra("USER_ROLE", "caregiver");
+            startActivity(intent);
         });
     }
 }
